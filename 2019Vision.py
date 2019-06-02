@@ -46,7 +46,7 @@ def processCameraStream(stream):
             x4 = approx[3][0][0]
             y4 = approx[3][0][1]
             
-            area = abs(((x1 * y2 - y1 * x2)+(x2 * y3 - y2 * x3) + (x3 * y4 - y3 * x4) + (x4 * y1 - y4 * x1)) / 2)
+            area = abs(((x1 * y2 - y1 * x2) + (x2 * y3 - y2 * x3) + (x3 * y4 - y3 * x4) + (x4 * y1 - y4 * x1)) / 2)
             
             if area > 300:
                 red = random.random() * 255
@@ -80,37 +80,36 @@ with cond:
     if not notified[0]:
         cond.wait()
 
-stream0 = cv2.VideoCapture(2)
-stream0.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
-stream0.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
+# stream0 = cv2.VideoCapture(2)
+# stream0.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
+# stream0.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
 
-stream1 = cv2.VideoCapture(3)
-stream1.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
-stream1.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
+# stream1 = cv2.VideoCapture(3)
+# stream1.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
+# stream1.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
 
 grayThresh = 160 #float(input("Enter Minimum Grayscale Value (Integer): "))
 width = 160
 frameReadTimer = 0;
 
-CameraServer.getInstance().startAutomaticCapture(name = "Drive cam 1", path = "/dev/video0")
-CameraServer.getInstance().startAutomaticCapture(name = "Drive cam 2", path = "/dev/video1")
+CameraServer.getInstance().startAutomaticCapture(name = "Front Camera", path = "/dev/video0")
+CameraServer.getInstance().startAutomaticCapture(name = "Rear Camera", path = "/dev/video1")
 
 while(True):
-    if frameReadTimer < 2:
-        frameReadTimer += 1
+    pass
+    # if frameReadTimer < 2:
+    #     frameReadTimer += 1
     
-    else:
-        cameraOut = processCameraStream(stream0)
-        table.putNumber("polyCount0", cameraOut[0])
+    # else:
+    #     cameraOut = processCameraStream(stream0)
+    #     if cameraOut[0] == 1:
+    #         table.putNumber("Front camera out", width/2 - cameraOut[1])
+    #         table.putBoolean("Front camera ready", True)
 
-        if not cameraOut[0] == 0:
-            table.putNumber("cameraOutput0", width/2 - cameraOut[1])
-
-        cameraOut = processCameraStream(stream1)
-        table.putNumber("polyCount1", cameraOut[0])
-
-        if not cameraOut[0] == 0:
-            table.putNumber("cameraOutput1", width/2 - cameraOut[1])
+    #     cameraOut = processCameraStream(stream1)
+    #     if not cameraOut[0] == 0:
+    #         table.putNumber("Rear camera out", width/2 - cameraOut[1])
+    #         table.putBoolean("Rear camera ready", True)
 
 
 cap.release()
